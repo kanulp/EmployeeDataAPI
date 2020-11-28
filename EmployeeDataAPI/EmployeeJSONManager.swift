@@ -11,7 +11,7 @@ import Foundation
 class JSONManager {
 
 
-    func fetchJSONData( completionHandler : @escaping (EmployeeModel)->Void )  {
+    func fetchJSONData( completionHandler : @escaping ([EmployeeModelElement])->Void )  {
 
     
                 let url = URL(string: "https://jsonplaceholder.typicode.com/users")!
@@ -26,7 +26,8 @@ class JSONManager {
                        // https://developer.apple.com/documentation/foundation/urlsession/1410330-datatask
                        
           
-            
+                        print(url)
+        
                        let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
                            
                            // Do two checks BEFORE attempting to extract the data from the response
@@ -36,6 +37,7 @@ class JSONManager {
                            // If there is an error, then "error" will have something in it
                            // Otherwise, it will be nil
                            if let error = error {
+                                print("error in url session")
                                print(error)
                                return
                            }
@@ -58,20 +60,20 @@ class JSONManager {
                            // 1. Non-nil Content-Type header
                            // 2. Content-Type starts with "text/plain"
                            // 3. Data is non-nil
-                           if let mimeType = httpResponse.mimeType,
-                               mimeType.starts(with: "text/plain"),
-                               let data = data {
+                          // if let mimeType = httpResponse.mimeType,
+                          //     mimeType.starts(with: "text/plain"),
+                               if let data = data {
                                
                                // Create and configure a JSON decoder
                                let decoder = JSONDecoder()
                                decoder.dateDecodingStrategy = .iso8601
-                               
-        
+                        
                                do {
                                 
-                                   let result = try decoder.decode(EmployeeModel.self, from: data)
+                                   let result = try decoder.decode([EmployeeModelElement].self, from: data)
                                    
                                    // Diagnostic
+                                print("result in url session")
                                 print(result)
                                
                                    // Save the data (in memory)
@@ -81,7 +83,8 @@ class JSONManager {
                                    
                                }
                                catch {
-                                   print(error)
+                                    print("error exception in url session")
+                                print(error)
                                }
                            }
                        }

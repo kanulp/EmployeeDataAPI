@@ -31,7 +31,16 @@ class DetailViewController: UIViewController {
         // Do any additional setup after loading the view.
         
         fillData(model: employeeModel!)
+        txt_website.isUserInteractionEnabled = true
+        let tap = UITapGestureRecognizer(target: self, action: #selector(DetailViewController.tapFunction))
+                txt_phone.isUserInteractionEnabled = true
+        txt_phone.addGestureRecognizer(tap)
     }
+    
+    @objc
+    @IBAction func tapFunction(sender: UITapGestureRecognizer) {
+            print("tap working")
+        }
     
     func fillData(model : EmployeeModelElement) {
       
@@ -51,8 +60,15 @@ class DetailViewController: UIViewController {
         txt_website.text = "\(model.website)"
         
         
-        
+        openUrl(urlStr: model.website)
     }
+    func openUrl(urlStr:String!) {
+
+         if let url = NSURL(string:urlStr) {
+            UIApplication.shared.open(url as URL)
+    }
+    }
+
     
     
 

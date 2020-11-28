@@ -12,7 +12,7 @@ class EmployeeListController :UIViewController, UITableViewDelegate,UITableViewD
     @IBOutlet var tableView: UITableView!
     let cellReuseIdentifier = "cell"
     
-    var list : EmployeeModel?
+    var list : [EmployeeModelElement]?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,6 +28,7 @@ class EmployeeListController :UIViewController, UITableViewDelegate,UITableViewD
         manager.fetchJSONData{
             (employees) in
             DispatchQueue.main.async {
+                print("calling in emp list controller")
                 self.list = employees
                 //print("data in listcontroller : \(employees[0].name) ")
                 self.tableView.reloadData()
@@ -58,6 +59,7 @@ class EmployeeListController :UIViewController, UITableViewDelegate,UITableViewD
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         print("you tapped : \(indexPath.row)")
+        
         let detailViewController = storyboard?.instantiateViewController(identifier: "DetailViewController") as? DetailViewController
         
         detailViewController?.employeeModel = (list?[indexPath.row])

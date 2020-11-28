@@ -38,4 +38,4 @@ struct Company: Codable {
     let name, catchPhrase, bs: String
 }
 
-typealias EmployeeModel = [EmployeeModelElement]
+//typealias EmployeeModel = [EmployeeModelElement]
